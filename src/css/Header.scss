@@ -10,26 +10,24 @@ html {
   text-rendering: optimizelegibility;
 }
 
-.text{
-  top: 350px;
-  left: 0;
-  width: 100%;
-  height: $height-mask;
-  z-index: 10;
-  text-anchor: middle;
-  padding-top: 350px;
-  color: rgb(245, 245, 245);
-
-  &__title {
-    letter-spacing: -2px;
-    font-size: 6em;
-    font-weight: 800;
-  }
-
-  &__subtitle {
-    letter-spacing: 8px;
-    font-size: 1.2em;
-    font-weight: 300;
-    text-transform: uppercase;
-  }
-}
+//.text{
+//  left: 0;
+//  width: 100%;
+//  height: $height-mask;
+//  z-index: 10;
+//  text-anchor: middle;
+//  padding-top: 350px;
+//
+//  &__title {
+//    letter-spacing: -2px;
+//    font-size: 6em;
+//    font-weight: 800;
+//  }
+//
+//  &__subtitle {
+//    letter-spacing: 8px;
+//    font-size: 1.2em;
+//    font-weight: 300;
+//    text-transform: uppercase;
+//  }
+//}
