@@ -7,7 +7,6 @@ class Post extends Component {
 
     handleClick(e) {
         e.preventDefault();
-        alert("click");
     }
 
     render() {

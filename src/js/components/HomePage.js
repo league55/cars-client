@@ -2,10 +2,13 @@ import React, {Component} from 'react';
 import {connect} from "react-redux";
 import {push} from 'react-router-redux'
 import {bindActionCreators} from 'redux'
+import {Col} from 'react-bootstrap'
 
 import '../../css/App.css';
 import Post from './Post';
 import Page from "./Page";
+import Stream from "./Stream";
+import RightPanel from "./RightPanel";
 
 class HomePage extends Component {
     componentWillMount() {
@@ -14,11 +17,21 @@ class HomePage extends Component {
         }
     }
 
+    handleMenuItemChange(menuItem) {
+
+    }
+
     render() {
         return (
             <Page>
                 <Post className="App-intro Row-md-12">
                     <p>{this.props.id ? this.props.id : "no Id"}</p>
+                    <Col md={6} xs={12}>
+                        <Stream/>
+                    </Col>
+                    <Col md={6} xs={12}>
+                        <RightPanel/>
+                    </Col>
                 </Post>
             </Page>
         );
