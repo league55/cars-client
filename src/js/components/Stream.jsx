@@ -1,26 +1,45 @@
 import React, {Component} from 'react';
+import {Image, Layer, Stage, Circle} from "react-konva";
+
 import '../../css/App.scss';
 import '../../css/Stream.css';
 import {Button, Col, FormGroup, Row} from 'react-bootstrap'
 import {StreamUtils} from "../util/StreamUtils";
+import {connect} from "react-redux";
+import {saveAnchorePosition} from "../actions/global-state-actions";
 
 class Stream extends Component {
 
-    constructor() {
+    constructor(props) {
         super();
-        this.state = {connected: false, src: ""};
+        this.state = {connected: false, image: new window.Image(), anchorsPosition: props.anchorsPosition};
         this.socketStream = new StreamUtils();
         this.handleConnectClick = this.handleConnectClick.bind(this);
         this.handleDisconnectClick = this.handleDisconnectClick.bind(this);
+        this.dragMove = this.dragMove.bind(this);
     }
+
+    dragMove(e) {
+        const newState = Object.assign({}, this.state);
+        newState.anchorsPosition[e.target.name()] = e.target.getAbsolutePosition();
+        this.setState(newState);
+    };
 
     handleConnectClick() {
         this.socketStream.subscribe("ws://localhost:8080/gs-guide-websocket", (client) => {
             const newState = Object.assign(this.state, {connected: true, client});
             this.setState(newState);
-
+            const self = this;
             client.subscribe('/topic/greetings', response => {
-                this.setState(Object.assign({}, this.state, {src: response.body}));
+                const image = new window.Image();
+                image.src = "data:image/jpeg;base64," + response.body;
+                image.width = 500;
+                image.height = 400;
+
+                image.onload = () => {
+                    self.setState(Object.assign({}, this.state, {image: image}));
+                }
+
             });
         });
 
@@ -37,6 +56,7 @@ class Stream extends Component {
     render() {
         const connectBtnClassName = this.state.connected ? "active btn btn-default" : "btn btn-default";
         const disconnectBtnClassName = !this.state.connected ? "active btn btn-default" : "btn btn-default";
+
         return (
             <div>
                 <Row>
@@ -62,8 +82,37 @@ class Stream extends Component {
 
                 <Row>
                     <Col md={12} xs={12}>
-                        <img id="image" className={"Stream--container"} alt={"stream"}
-                             src={"data:image/jpeg;base64," + this.state.src || ""}/>
+                        <Stage width={this.state.image.width} height={this.state.image.height}>
+                            <Layer>
+                                <Image id="image" image={this.state.image} className={"Stream--container"}
+                                       alt={"stream"}/>
+                                {this.props.showAnchors && <Circle x={this.state.anchorsPosition.topLeftAnchor.x}
+                                                                   y={this.state.anchorsPosition.topLeftAnchor.y}
+                                                                   stroke={'#666'} fill={'#ddd'} strokeWidth={2}
+                                                                   radius={8} name={"topLeftAnchor"} draggable
+                                                                   dragOnTop={false} onDragMove={this.dragMove}
+                                                                   onDragEnd={this.props.savePosition}/>}
+                                {this.props.showAnchors && <Circle x={this.state.anchorsPosition.topRightAnchor.x}
+                                                                   y={this.state.anchorsPosition.topRightAnchor.y}
+                                                                   stroke={'#666'} fill={'#ddd'} strokeWidth={2}
+                                                                   radius={8} name={"topRightAnchor"} draggable
+                                                                   dragOnTop={false} onDragMove={this.dragMove}
+                                                                   onDragEnd={this.props.savePosition}/>}
+                                {this.props.showAnchors && <Circle x={this.state.anchorsPosition.botRightAnchor.x}
+                                                                   y={this.state.anchorsPosition.botRightAnchor.y}
+                                                                   stroke={'#666'} fill={'#ddd'} strokeWidth={2}
+                                                                   radius={8} name={"botRightAnchor"} draggable
+                                                                   dragOnTop={false} onDragMove={this.dragMove}
+                                                                   onDragEnd={this.props.savePosition}/>}
+                                {this.props.showAnchors && <Circle x={this.state.anchorsPosition.botLeftAnchor.x}
+                                                                   y={this.state.anchorsPosition.botLeftAnchor.y}
+                                                                   stroke={'#666'} fill={'#ddd'} strokeWidth={2}
+                                                                   radius={8} name={"botLeftAnchor"} draggable
+                                                                   dragOnTop={false} onDragMove={this.dragMove}
+                                                                   onDragEnd={this.props.savePosition}/>}
+
+                            </Layer>
+                        </Stage>
                     </Col>
                 </Row>
             </div>
@@ -71,4 +120,24 @@ class Stream extends Component {
     }
 }
 
-export default Stream;
+const mapStateToProps = (state) => {
+    return {
+        showAnchors: state.showAnchors,
+        anchorsPosition: state.anchorsPosition
+    }
+};
+
+const mapDispatchToProps = (dispatch, ownProps) => {
+    return {
+        savePosition: (e) => {
+            const point = {
+                ...e.target.getAbsolutePosition(),
+                windowWidth: e.target.parent.parent.attrs.width,
+                windowHeight: e.target.parent.parent.attrs.height
+            };
+            dispatch(saveAnchorePosition(e.target.name(), point));
+        }
+    }
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(Stream);

@@ -2,8 +2,8 @@ import * as React from 'react';
 import {Provider} from 'react-redux';
 import {Route} from 'react-router-dom'
 import {ConnectedRouter} from 'react-router-redux'
-import WelcomeForm from "./WelcomeForm";
-import HomePage from "./HomePage";
+import WelcomeForm from "./pages/WelcomeForm";
+import HomePage from "./pages/HomePage";
 import store, {history} from '../store/store-index'
 import Header from "./Header";
 

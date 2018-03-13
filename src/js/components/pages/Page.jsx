@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import {Grid} from 'react-bootstrap'
 
-import '../../css/App.css';
+import '../../../css/App.css';
 
 class Page extends Component {
     render() {

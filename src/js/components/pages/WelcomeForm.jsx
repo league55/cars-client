@@ -1,8 +1,8 @@
 import React, {Component} from 'react';
 import {connect} from "react-redux";
 import {Button, FormControl, ControlLabel, FormGroup, HelpBlock, Row, Col} from 'react-bootstrap'
-import {proccessCameraId} from '../actions/props-actions'
-import '../../css/App.css';
+import {proccessCameraId} from '../../actions/props-actions'
+import '../../../css/App.css';
 import Page from "./Page";
 
 class WelcomeForm extends Component {

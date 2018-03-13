@@ -1,2 +1,6 @@
 export const SAVE_CAMERA_ID = "SAVE_CAMERA_ID";
 
+
+export const TRIGGER_ANCHORS = "TRIGGER_ANCHORS";
+export const ANCHOR_MOVED = "ANCHOR_MOVED";
+

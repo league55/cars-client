@@ -1,8 +1,8 @@
 import React, {Component} from 'react';
 import {connect} from "react-redux";
 import {Col, ControlLabel, Form, FormControl, FormGroup, Row} from 'react-bootstrap'
-import {proccessCameraId} from '../actions/props-actions'
-import '../../css/Container.css';
+import {proccessCameraId} from '../../actions/props-actions'
+import '../../../css/Container.css';
 
 function FieldGroup({id, label, help, wrapperClass, ...props}) {
     return (

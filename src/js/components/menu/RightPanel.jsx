@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
-import '../../css/App.scss';
-import '../../css/Stream.css';
+import '../../../css/App.scss';
+import '../../../css/Stream.css';
 import {Nav, NavItem} from 'react-bootstrap'
 import Logs from "./Logs";
 import Settings from "./Settings";
