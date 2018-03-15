@@ -1,23 +1,20 @@
 import * as ActionType from "../actions/actionTypes";
 
-const initialState = {
-    showAnchors: false
-};
-
-export const showAnchors = (state = initialState, action) => {
+const defaultShowAnchors = false;
+export const showAnchors = (state = defaultShowAnchors, action) => {
     switch (action.type) {
         case ActionType.TRIGGER_ANCHORS:
-            return !initialState.showAnchors
+            return !state;
         default:
-            return state
+            return state;
     }
 };
 
 const initialAnchorsState = {
-    topLeftAnchor: {x: 10, y: 20},
-    topRightAnchor: {x: 20, y: 20},
-    botRightAnchor: {x: 20, y: 10},
-    botLeftAnchor: {x: 10, y: 10}
+    topLeftAnchor: {x: 20, y: 20},
+    topRightAnchor: {x: 40, y: 20},
+    botRightAnchor: {x: 40, y: 40},
+    botLeftAnchor: {x: 20, y: 40}
 };
 
 export const anchorsPosition = (state = initialAnchorsState, action) => {
@@ -28,7 +25,7 @@ export const anchorsPosition = (state = initialAnchorsState, action) => {
 
             return newState;
         default:
-            return state
+            return state;
     }
 };
 

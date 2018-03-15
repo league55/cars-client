@@ -12,11 +12,14 @@ class Settings extends Component {
         return (
             <Form horizontal className={"Container"}>
                 <Row>
-                    <Button label="Добавить якоря " id="add-anchors" onClick={this.props.showAnchors}
+                    <Button id="add-anchors" onClick={this.props.showAnchors}
                             className={"col-md-3 col-md-offset-1 col-xs-6"}>Добавить якоря</Button>
-                    <Button label="Добавить якоря " id="save-grid"
+                    <Button id="save-grid"
                             onClick={() => CalibrationApi.submitAnchorsGrid(this.props.anchorsPosition)}
                             className={"col-md-3 col-md-offset-1 col-xs-6"}>Сохранить зону</Button>
+                    <Button id="reset-grid"
+                            onClick={() => CalibrationApi.resetAnchorsGrid()}
+                            className={"col-md-3 col-md-offset-1 col-xs-6"}>Сбросить зоны</Button>
                 </Row>
             </Form>
         );

@@ -89,25 +89,25 @@ class Stream extends Component {
                                 {this.props.showAnchors && <Circle x={this.state.anchorsPosition.topLeftAnchor.x}
                                                                    y={this.state.anchorsPosition.topLeftAnchor.y}
                                                                    stroke={'#666'} fill={'#ddd'} strokeWidth={2}
-                                                                   radius={8} name={"topLeftAnchor"} draggable
+                                                                   radius={5} name={"topLeftAnchor"} draggable
                                                                    dragOnTop={false} onDragMove={this.dragMove}
                                                                    onDragEnd={this.props.savePosition}/>}
                                 {this.props.showAnchors && <Circle x={this.state.anchorsPosition.topRightAnchor.x}
                                                                    y={this.state.anchorsPosition.topRightAnchor.y}
                                                                    stroke={'#666'} fill={'#ddd'} strokeWidth={2}
-                                                                   radius={8} name={"topRightAnchor"} draggable
+                                                                   radius={5} name={"topRightAnchor"} draggable
                                                                    dragOnTop={false} onDragMove={this.dragMove}
                                                                    onDragEnd={this.props.savePosition}/>}
                                 {this.props.showAnchors && <Circle x={this.state.anchorsPosition.botRightAnchor.x}
                                                                    y={this.state.anchorsPosition.botRightAnchor.y}
                                                                    stroke={'#666'} fill={'#ddd'} strokeWidth={2}
-                                                                   radius={8} name={"botRightAnchor"} draggable
+                                                                   radius={5} name={"botRightAnchor"} draggable
                                                                    dragOnTop={false} onDragMove={this.dragMove}
                                                                    onDragEnd={this.props.savePosition}/>}
                                 {this.props.showAnchors && <Circle x={this.state.anchorsPosition.botLeftAnchor.x}
                                                                    y={this.state.anchorsPosition.botLeftAnchor.y}
                                                                    stroke={'#666'} fill={'#ddd'} strokeWidth={2}
-                                                                   radius={8} name={"botLeftAnchor"} draggable
+                                                                   radius={5} name={"botLeftAnchor"} draggable
                                                                    dragOnTop={false} onDragMove={this.dragMove}
                                                                    onDragEnd={this.props.savePosition}/>}
 

@@ -1,11 +1,9 @@
 import * as ActionType from "./actionTypes";
 
-export const triggerAnchorsState = () => {
-    return dispatch => {
-        dispatch({
-            type: ActionType.TRIGGER_ANCHORS
-        });
-    }
+export const triggerAnchorsState = (dispatch) => {
+    dispatch({
+        type: ActionType.TRIGGER_ANCHORS
+    });
 };
 
 
