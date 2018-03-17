@@ -1,6 +1,6 @@
 export class SettingsApi {
 
- static updateProperty(prop) {
+ static submitProps(prop) {
         return fetch("http://localhost:8080/settings",
             {
                 headers: {
@@ -8,7 +8,7 @@ export class SettingsApi {
                     'Content-Type': 'application/json'
                 },
                 method: "post",
-                requestBody: JSON.stringify(prop)
+                body: JSON.stringify(prop)
             })
             .then(() => prop)
             .catch(() => prop);

@@ -14,14 +14,19 @@ export const proccessCameraId = (id) => {
     }
 };
 
-export const handlePropertyChange = dispatch => {
+export const handlePropertyChange = property => {
+    return {
+        type: ActionType.PROPERTY_CHANGE,
+        ...property
+    }
+};
 
-    SettingsApi.updateProperty(dispatch)
-        .then(props => dispatch({
-            type: ActionType.LOAD_PROPS,
-            ...props
-        }))
-        .catch(e => alert(e));
+export const handlePropertisSubmit = () => {
+    return (dispatch, getState) => {
+        const submitProps = SettingsApi.submitProps(getState().props.streamProps);
+        submitProps
+            .catch(() => alert("failed to save props"));
+    }
 };
 
 
