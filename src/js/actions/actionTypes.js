@@ -7,3 +7,5 @@ export const PROPERTY_CHANGE = "PROPERTY_CHANGE";
 export const TRIGGER_ANCHORS = "TRIGGER_ANCHORS";
 export const ANCHOR_MOVED = "ANCHOR_MOVED";
 
+export const SLIDER_MOVED = "SLIDER_MOVED";
+

@@ -2,7 +2,7 @@ import React, {Component} from 'react';
 import {connect} from "react-redux";
 import shallowCompare from 'react-addons-shallow-compare';
 import {Button, Form, Row} from 'react-bootstrap'
-import {handleLoadProps, handlePropertisSubmit, handlePropertyChange} from '../../actions/props-actions'
+import {handleLoadProps, handlePropertisSubmit} from '../../actions/props-actions'
 import '../../../css/Container.css';
 import * as Props from "../../constants/Properties";
 import SettingsItem from "./SettingsItem";
@@ -21,40 +21,34 @@ class Settings extends Component {
     }
 
     render() {
-        const {handlePropertyChange, streamProps = [], onClick} = this.props;
+        const {streamProps = [], onClick} = this.props;
         return (
             <Form horizontal className={"Container"}>
                 <Row>
                     <SettingsItem label="Зон "
                                 name={Props.ZonesPerLineAmount}
                                 value={Settings.getPropValue(streamProps, Props.ZonesPerLineAmount)}
-                                onChange={handlePropertyChange}
                                 wrapperClass={"col-md-6 col-xs-6"}/>
                     <SettingsItem label="Полос "
                                 name={Props.RoadWaysAmount}
-                                onChange={handlePropertyChange}
                                 value={Settings.getPropValue(streamProps, Props.RoadWaysAmount)}
                                 wrapperClass={"col-md-6 col-xs-6"}/>
                 </Row>
                 <Row>
                     <SettingsItem label="IP " name={Props.CameraIP}
-                                onChange={handlePropertyChange}
                                 value={Settings.getPropValue(streamProps, Props.CameraIP)}
                                 wrapperClass={"col-md-6 col-xs-6"}/>
                     <SettingsItem label="ΔT " name={Props.TimeBetweenOutput}
                                 value={Settings.getPropValue(streamProps, Props.TimeBetweenOutput)}
-                                onChange={handlePropertyChange}
                                 wrapperClass={"col-md-6 col-xs-6"}/>
                 </Row>
                 <Row>
                     <SettingsItem label="Высота зоны (м.)" name={Props.ZoneHeight}
-                                onChange={handlePropertyChange}
                                 lableSm={8}
                                 controlSm={4}
                                 value={Settings.getPropValue(streamProps, Props.ZoneHeight)}
                                 wrapperClass={"col-md-6 col-xs-6"}/>
                     <SettingsItem label="Видео Файл" name={Props.PathToVideoFile}
-                                onChange={handlePropertyChange}
                                 value={Settings.getPropValue(streamProps, Props.PathToVideoFile)}
                                 wrapperClass={"col-md-6 col-xs-6"}/>
                 </Row>

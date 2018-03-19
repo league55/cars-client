@@ -4,9 +4,19 @@ import {Button, Form, Row} from 'react-bootstrap'
 import '../../../css/Container.css';
 import {triggerAnchorsState} from "../../actions/global-state-actions";
 import {CalibrationApi} from "../../rest/CalibrationApi";
+import {handleLoadProps} from '../../actions/props-actions'
+import {RoadWaysAmount, ZonesPerLineAmount} from "../../constants/Properties";
+import GridCalibration from "./GridCalibration";
 
 
 class Calibration extends Component {
+
+    componentDidMount() {
+        const {streamProps, loadProps} = this.props;
+        if (!streamProps || streamProps.length === 0) {
+            loadProps();
+        }
+    }
 
     render() {
         return (
@@ -21,6 +31,15 @@ class Calibration extends Component {
                             onClick={() => CalibrationApi.resetAnchorsGrid()}
                             className={"col-md-3 col-md-offset-1 col-xs-6"}>Сбросить зоны</Button>
                 </Row>
+                <Row>
+                    <div className={"col-md-12 col-xs-12 "}>
+                        <GridCalibration calibrationType={ZonesPerLineAmount} defaultValue={0}/>
+                    </div>
+                </Row>
+                <Row>
+                    <div className={"col-md-12 col-xs-12 "}>
+                        <GridCalibration calibrationType={RoadWaysAmount} defaultValue={0}/>
+                    </div>                </Row>
             </Form>
         );
     }
@@ -29,7 +48,8 @@ class Calibration extends Component {
 const mapStateToProps = (state) => {
     return {
         help: state.props.id ? `Last used id = ${state.props.id}` : "",
-        anchorsPosition: state.anchorsPosition
+        anchorsPosition: state.anchorsPosition,
+        streamProps: state.props.streamProps
     }
 };
 
@@ -37,6 +57,9 @@ const mapDispatchToProps = (dispatch) => {
     return {
         showAnchors: () => {
             dispatch(triggerAnchorsState);
+        },
+        loadProps: () => {
+            dispatch(handleLoadProps);
         }
     }
 };
