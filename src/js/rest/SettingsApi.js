@@ -1,7 +1,7 @@
 export class SettingsApi {
 
  static submitProps(prop) {
-        return fetch("http://localhost:8080/settings",
+        return fetch("/settings",
             {
                 headers: {
                     'Accept': 'application/json',
@@ -15,7 +15,7 @@ export class SettingsApi {
     }
 
  static loadProperties() {
-        return fetch("http://localhost:8080/settings",
+        return fetch("/settings",
             {
                 headers: {
                     'Accept': 'application/json',

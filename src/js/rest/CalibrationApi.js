@@ -1,6 +1,6 @@
 export class CalibrationApi {
  static submitAnchorsGrid(anchorsPosition) {
-       return fetch("http://localhost:8080/calibration",
+       return fetch("/calibration",
             {
                 headers: {
                     'Accept': 'application/json',
@@ -15,7 +15,7 @@ export class CalibrationApi {
 
 
  static resetAnchorsGrid() {
-       return fetch("http://localhost:8080/calibration",
+       return fetch("/calibration",
             {
                 headers: {
                     'Accept': 'application/json',

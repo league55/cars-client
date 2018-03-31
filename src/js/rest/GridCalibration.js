@@ -1,6 +1,6 @@
 export class GridCalibration {
     static updateGrid(request) {
-        return fetch("http://localhost:8080/grid",
+        return fetch("/grid",
             {
                 headers: {
                     'Accept': 'application/json',
