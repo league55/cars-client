@@ -2,7 +2,7 @@
   "name": "front-end",
   "version": "0.1.0",
   "private": true,
-  "homepage": "https://league55.github.io/cars-client/",
+  "homepage": "https://localhost:8080/",
   "email": "marudenko96@gmail.com",
   "author": "Maksym Rudenko",
   "dependencies": {
