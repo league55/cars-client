@@ -1,11 +1,11 @@
 import React, {Component} from 'react';
 import {connect} from "react-redux";
-import {Button, Form, Row} from 'react-bootstrap'
+import {Button, Form, Row, FormGroup} from 'react-bootstrap'
 import '../../../css/Container.css';
 import {triggerAnchorsState} from "../../actions/global-state-actions";
 import {CalibrationApi} from "../../rest/CalibrationApi";
 import {handleLoadProps} from '../../actions/props-actions'
-import {RoadWaysAmount, ZonesPerLineAmount} from "../../constants/Properties";
+import {ZonesPerLineAmount} from "../../constants/Properties";
 import GridCalibration from "./GridCalibration";
 
 
@@ -21,16 +21,18 @@ class Calibration extends Component {
     render() {
         return (
             <Form horizontal className={"Container"}>
-                <Row>
-                    <Button id="add-anchors" onClick={this.props.showAnchors}
-                            className={"col-md-3 col-md-offset-1 col-xs-6"}>Добавить якоря</Button>
-                    <Button id="save-grid"
-                            onClick={() => CalibrationApi.submitAnchorsGrid(this.props.anchorsPosition)}
-                            className={"col-md-3 col-md-offset-1 col-xs-6"}>Сохранить зону</Button>
-                    <Button id="reset-grid"
-                            onClick={() => CalibrationApi.resetAnchorsGrid()}
-                            className={"col-md-3 col-md-offset-1 col-xs-6"}>Сбросить зоны</Button>
-                </Row>
+                <FormGroup>
+                    <Row>
+                        <Button id="add-anchors" onClick={this.props.showAnchors}
+                                className={"col-md-3 col-md-offset-1 col-xs-6"}>Добавить якоря</Button>
+                        <Button id="save-grid"
+                                onClick={() => CalibrationApi.submitAnchorsGrid(this.props.anchorsPosition)}
+                                className={"col-md-3 col-md-offset-1 col-xs-6"}>Сохранить зону</Button>
+                        <Button id="reset-grid"
+                                onClick={() => CalibrationApi.resetAnchorsGrid()}
+                                className={"col-md-3 col-md-offset-1 col-xs-6"}>Сбросить зоны</Button>
+                    </Row>
+                </FormGroup>
                 <Row>
                     <div className={"col-md-12 col-xs-12 "}>
                         <GridCalibration calibrationType={ZonesPerLineAmount} defaultValue={0}/>
@@ -38,8 +40,9 @@ class Calibration extends Component {
                 </Row>
                 <Row>
                     <div className={"col-md-12 col-xs-12 "}>
-                        <GridCalibration calibrationType={RoadWaysAmount} defaultValue={0}/>
-                    </div>                </Row>
+                        {/*<GridCalibration calibrationType={RoadWaysAmount} defaultValue={0}/>*/}
+                    </div>
+                </Row>
             </Form>
         );
     }

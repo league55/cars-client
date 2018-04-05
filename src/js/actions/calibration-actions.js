@@ -22,12 +22,37 @@ export const handlePropertyChange = property => {
     }
 };
 
-export const handleCalibrationSliderChange = (calibrationType, value, lineNumber) => {
+export const calibrationSliderRelease = (calibrationType, value, lineNumber) => {
+    // if(!lineNumber){
+    //     return;
+    // }
+
     return (dispatch, getState) => {
-        const submitProps = GridCalibration.updateGrid({calibrationType, value: value - getState().slider.prevValue, lineNumber});
+        const submitProps = GridCalibration.updateGrid({
+            calibrationType,
+            value: value - getState().slider[calibrationType][lineNumber].prevValue,
+            lineNumber
+        });
         submitProps
-            .then(dispatch({type: ActionType.SLIDER_MOVED, calibrationType, value}))
-            .catch(dispatch({type: ActionType.SLIDER_MOVED, calibrationType, value}));
+            .then(dispatch({type: ActionType.SLIDER_MOVED, calibrationType, value, lineNumber}))
+            .catch(dispatch({type: ActionType.SLIDER_MOVED, calibrationType, value, lineNumber}));
+    }
+};
+
+export const calibrationSliderChange = (calibrationType, value, lineNumber) => {
+    return {
+        type: ActionType.SLIDER_CHANGED,
+        calibrationType,
+        value,
+        lineNumber
+    }
+};
+
+export const lineNumberChange = (calibrationType, lineNumber) => {
+    return {
+        type: ActionType.LINE_NUM_CHANGED,
+        calibrationType,
+        lineNumber
     }
 };
 

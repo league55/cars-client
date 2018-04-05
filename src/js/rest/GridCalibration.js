@@ -1,6 +1,8 @@
+import CurrentUrlUtils from "../util/CurrentUrlUtils";
+
 export class GridCalibration {
     static updateGrid(request) {
-        return fetch("/grid",
+        return fetch(CurrentUrlUtils.getHost() + "/grid",
             {
                 headers: {
                     'Accept': 'application/json',

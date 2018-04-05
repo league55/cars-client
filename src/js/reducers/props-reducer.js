@@ -19,7 +19,7 @@ export default (state = initialState, action) => {
         case ActionType.LOAD_SINGLE_PROP:
         case ActionType.PROPERTY_CHANGE:
             const newProps = state.streamProps;
-            const i = newProps.findIndex(prop => prop.key = action.key);
+            const i = newProps.findIndex(prop => prop.key === action.key);
             newProps[i].value = action.value;
 
             return Object.assign({}, state, {

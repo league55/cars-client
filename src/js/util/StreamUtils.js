@@ -6,7 +6,7 @@ var Stomp = require('stompjs');
 export class StreamUtils {
 
     subscribe(path, successCallback) {
-        this.stompClient = Stomp.client("wss://cars-server.herokuapp.com/gs-guide-websocket");
+        this.stompClient = Stomp.client("ws://localhost:8080/gs-guide-websocket");
         this.stompClient.debug = null;
         this.stompClient.connect({}, () => successCallback(this.stompClient));
     }

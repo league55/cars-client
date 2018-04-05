@@ -1,7 +1,9 @@
+import CurrentUrlUtils from "../util/CurrentUrlUtils";
+
 export class SettingsApi {
 
  static submitProps(prop) {
-        return fetch("/settings",
+        return fetch(CurrentUrlUtils.getHost() + "/settings",
             {
                 headers: {
                     'Accept': 'application/json',
@@ -15,7 +17,7 @@ export class SettingsApi {
     }
 
  static loadProperties() {
-        return fetch("/settings",
+        return fetch(CurrentUrlUtils.getHost() + "/settings",
             {
                 headers: {
                     'Accept': 'application/json',

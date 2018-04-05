@@ -3,7 +3,7 @@ import { combineReducers } from 'redux'
 import props from "./props-reducer";
 import {anchorsPosition, showAnchors} from "./global-state-reducer";
 import { routerReducer } from 'react-router-redux';
-import {slider} from "./calibration-reducer";
+import {lineNumber, slider} from "./calibration-reducer";
 
 
 export default combineReducers({
@@ -11,5 +11,6 @@ export default combineReducers({
     slider,
     showAnchors,
     anchorsPosition,
+    lineNumber,
     routing: routerReducer
 })

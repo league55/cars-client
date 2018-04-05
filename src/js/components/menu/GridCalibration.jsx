@@ -1,31 +1,39 @@
 import React, {Component} from 'react';
 import {connect} from "react-redux";
-import {FormGroup, Radio, Row} from 'react-bootstrap'
+import {Button, ButtonToolbar, Col, FormGroup, Row} from 'react-bootstrap'
 import '../../../css/Container.css';
 import {getPropValue} from "../../util/PropertiesUtil";
-import {handleCalibrationSliderChange} from "../../actions/calibration-actions";
+import {calibrationSliderChange, calibrationSliderRelease, lineNumberChange} from "../../actions/calibration-actions";
 
 
 class GridCalibration extends Component {
 
     constructor() {
         super();
-        this.state = {lineNum: 0};
         this.getRadioBtns = this.getRadioBtns.bind(this);
+        this.sliderChanged = this.sliderChanged.bind(this);
+        this.sliderReleased = this.sliderReleased.bind(this);
+    }
+
+    sliderChanged(e) {
+        this.props.onSliderChange(e, this.props.lineNum);
+    }
+
+    sliderReleased(e) {
+        this.props.onSliderRelease(e, this.props.lineNum);
     }
 
     getRadioBtns(gridSize, calibrationType) {
-        const onClick = (e) => {
-            e.preventDefault();
-            this.setState({lineNum: e.target.value});
-        };
-        const buttons = new Array(+gridSize);
-        for (let i = 1; i < +gridSize + 1; i++) {
-            buttons.push(<Radio name="radioGroup" inline key={calibrationType + i} value={i} checked={i == this.state.lineNum} onClick={onClick}>
-                {i}
-            </Radio>)
+        const buttons = [];
+        for (let i = 0; i < +gridSize - 1; i++) {
+            buttons.push(
+                <Button name={i}
+                        active={i === this.props.lineNum}
+                        key={calibrationType + "key" + i}
+                        onClick={() => this.props.onLineNumChange(i)}>{i + 1}</Button>
+            )
         }
-        return buttons;
+        return <ButtonToolbar>{buttons}</ButtonToolbar>;
     }
 
     render() {
@@ -33,20 +41,23 @@ class GridCalibration extends Component {
         return (
             <div>
                 <Row>
-                    <FormGroup>
-                        {radiobuttons}
-                    </FormGroup>
+                    <Col md={6} mdOffset={4}>
+                        <FormGroup>
+                            {radiobuttons}
+                        </FormGroup>
+                    </Col>
                 </Row>
                 <Row>
-                    <div className={"col-md-12 col-xs-12 "}>
+                    <Col md={11} mdOffset={1}>
                         <input
                             type="range"
                             min="-100"
                             max="100"
-                            value={this.props.sliderValue || this.props.defaultValue}
+                            value={this.props.sliderValue ? this.props.sliderValue.value : this.props.defaultValue}
                             className="slider"
-                            onMouseup={(e) => this.props.onSliderRelease(e, this.state.lineNum)}/>
-                    </div>
+                            onChange={this.sliderChanged}
+                            onMouseUp={this.sliderReleased}/>
+                    </Col>
                 </Row>
             </div>
         );
@@ -54,16 +65,24 @@ class GridCalibration extends Component {
 }
 
 const mapStateToProps = (state, ownProps) => {
+    const lineNum = state.lineNumber[ownProps.calibrationType];
     return {
         gridSize: getPropValue(state.props.streamProps, ownProps.calibrationType),
-        sliderValue: state.slider[ownProps.calibrationType]
+        sliderValue: state.slider[ownProps.calibrationType] && state.slider[ownProps.calibrationType][lineNum],
+        lineNum
     }
 };
 
 const mapDispatchToProps = (dispatch, ownProps) => {
     return {
-        onSliderRelease: (e, lineNum) => {
-            dispatch(handleCalibrationSliderChange(ownProps.calibrationType, e.target.value, lineNum));
+        onSliderRelease: (e, lineNumber) => {
+            dispatch(calibrationSliderRelease(ownProps.calibrationType, e.target.value, lineNumber));
+        },
+        onSliderChange: (e, lineNumber) => {
+            dispatch(calibrationSliderChange(ownProps.calibrationType, e.target.value, lineNumber));
+        },
+        onLineNumChange: (lineNum) => {
+            dispatch(lineNumberChange(ownProps.calibrationType, lineNum))
         }
     }
 };

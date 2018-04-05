@@ -1,6 +1,8 @@
+import CurrentUrlUtils from "../util/CurrentUrlUtils";
+
 export class CalibrationApi {
  static submitAnchorsGrid(anchorsPosition) {
-       return fetch("/calibration",
+       return fetch(CurrentUrlUtils.getHost() + "/calibration",
             {
                 headers: {
                     'Accept': 'application/json',
@@ -15,7 +17,7 @@ export class CalibrationApi {
 
 
  static resetAnchorsGrid() {
-       return fetch("/calibration",
+       return fetch(CurrentUrlUtils.getHost() + "/calibration",
             {
                 headers: {
                     'Accept': 'application/json',

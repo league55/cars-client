@@ -1,6 +1,6 @@
 
 export default class CurrentUrlUtils {
-    static getQueryParamValue(queryParamName) {
-
+    static getHost() {
+        return  "http://localhost:8080";
     }
 }
