@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {Image, Layer, Stage, Circle} from "react-konva";
+import {Circle, Image, Layer, Stage} from "react-konva";
 
 import '../../css/App.scss';
 import '../../css/Stream.css';
@@ -7,6 +7,7 @@ import {Button, Col, FormGroup, Row} from 'react-bootstrap'
 import {StreamUtils} from "../util/StreamUtils";
 import {connect} from "react-redux";
 import {saveAnchorePosition} from "../actions/global-state-actions";
+import * as ActionType from "../actions/actionTypes";
 
 class Stream extends Component {
 
@@ -26,11 +27,11 @@ class Stream extends Component {
     };
 
     handleConnectClick() {
-        this.socketStream.subscribe("ws://localhost:8080/gs-guide-websocket", (client) => {
+        this.socketStream.connect("ws://localhost:8080/gs-guide-websocket", (client) => {
             const newState = Object.assign(this.state, {connected: true, client});
             this.setState(newState);
             const self = this;
-            client.subscribe('/topic/greetings', response => {
+            client.subscribe('/stream', response => {
                 const image = new window.Image();
                 image.src = "data:image/jpeg;base64," + response.body;
                 image.width = 500;
@@ -40,6 +41,10 @@ class Stream extends Component {
                     self.setState(Object.assign({}, this.state, {image: image}));
                 }
 
+            });
+
+            client.subscribe('/log', response => {
+                this.props.logsUpdate(JSON.parse(response.body));
             });
         });
 
@@ -136,6 +141,9 @@ const mapDispatchToProps = (dispatch, ownProps) => {
                 windowHeight: e.target.parent.parent.attrs.height
             };
             dispatch(saveAnchorePosition(e.target.name(), point));
+        },
+        logsUpdate: (newLogs) => {
+            dispatch({type: ActionType.LOGS_UPDATE, value: newLogs});
         }
     }
 };

@@ -1,46 +1,54 @@
 import React, {Component} from 'react';
-import shallowCompare from 'react-addons-shallow-compare';
-import {Form, Label, Row} from 'react-bootstrap'
+import {Button, Form, Row, Well} from 'react-bootstrap'
 import '../../../css/Container.css';
 import {StatusApi} from "../../rest/LogsApi";
+import {CAMERA_STATUS_UPDATED} from "../../actions/actionTypes";
+import {connect} from "react-redux";
+import "../../../css/Logs.css";
 
 class Logs extends Component {
     constructor() {
         super();
-
-        this.state = {isCameraActive: undefined};
+        this.checkStatus = this.checkStatus.bind(this);
     }
 
     componentDidMount() {
-        const onStatusReceived = (response) => this.setState({isCameraActive: Boolean(response)});
-
-        if (!this.state.isCameraActive) {
-            StatusApi.getStatus().then(onStatusReceived);
-        }
+        this.checkStatus();
     }
 
-    shouldComponentUpdate(nextProps, nextState) {
-        return shallowCompare(this, nextProps, nextState);
+    checkStatus() {
+        StatusApi.getStatus().then(this.props.updateStatus)
     }
 
     render() {
-        const notDefined = <Label bsStyle="default">...</Label>;
-        const notActive = <Label bsStyle="danger">OFF</Label>;
-        const active = <Label bsStyle="success">ON</Label>;
+        const {isCameraActive, log} = this.props;
+
+        const notDefined = <Button bsStyle="default" onClick={() => this.checkStatus()}>...</Button>;
+        const notActive = <Button bsStyle="danger" onClick={() => this.checkStatus()}>OFF</Button>;
+        const active = <Button bsStyle="success" onClick={() => this.checkStatus()}>ON</Button>;
+
         let cameraStatus;
-        if (this.state.isCameraActive === undefined) {
+        if (isCameraActive === undefined) {
             cameraStatus = notDefined;
+        } else if (isCameraActive === "true") {
+            cameraStatus = active;
         } else {
-            if (this.state.isCameraActive === "true") {
-                cameraStatus = active;
-            } else {
-                cameraStatus = notActive;
-            }
+            cameraStatus = notActive;
         }
+
+        function getLogsContent(log) {
+            return log.map(content => <p key={content.substring(content.length - 10) + window.Date.now()}>{content}</p>);
+        }
+
+        const content = getLogsContent(log);
+
         return (
-            <Form horizontal className={"Container"}>
+            <Form horizontal className={"Container Logs"}>
                 <Row>
                     {cameraStatus}
+                </Row>
+                <Row>
+                    <Well className={"Well"}>{content}</Well>
                 </Row>
             </Form>
         );
@@ -53,4 +61,22 @@ class Logs extends Component {
     }
 }
 
-export default Logs;
+
+const mapStateToProps = (state, ownProps) => {
+    const isCameraActive = state.camera.isCameraActive;
+    const log = state.applicationLogs;
+    return {
+        isCameraActive,
+        log
+    }
+};
+
+const mapDispatchToProps = (dispatch) => {
+    return {
+        updateStatus: (newStatus) => {
+            dispatch({type: CAMERA_STATUS_UPDATED, value: newStatus});
+        }
+    }
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(Logs);

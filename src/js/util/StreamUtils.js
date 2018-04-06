@@ -5,7 +5,7 @@ var Stomp = require('stompjs');
 
 export class StreamUtils {
 
-    subscribe(path, successCallback) {
+    connect(path, successCallback) {
         this.stompClient = Stomp.client("ws://localhost:8080/gs-guide-websocket");
         this.stompClient.debug = null;
         this.stompClient.connect({}, () => successCallback(this.stompClient));
@@ -17,9 +17,5 @@ export class StreamUtils {
             this.stompClient.disconnect();
         }
         console.log("Disconnected");
-    }
-
-    static sendName(client) {
-        client.send("/app/hello", {}, JSON.stringify({'name': $("#name").val()}));
     }
 }

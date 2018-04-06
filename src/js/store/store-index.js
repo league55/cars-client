@@ -4,14 +4,14 @@ import rootReducer from '../reducers/root-reducer'
 import { routerMiddleware } from 'react-router-redux'
 import createHistory from 'history/createBrowserHistory'
 
-const initialState = {}
-const enhancers = []
-export const history = createHistory()
+const initialState = {};
+const enhancers = [];
+export const history = createHistory();
 
 const middleware = [
     routerMiddleware(history),
     thunk
-]
+];
 
 
 if (process.env.NODE_ENV === 'development') {
