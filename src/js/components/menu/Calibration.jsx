@@ -5,7 +5,7 @@ import '../../../css/Container.css';
 import {triggerAnchorsState} from "../../actions/global-state-actions";
 import {CalibrationApi} from "../../rest/CalibrationApi";
 import {handleLoadProps} from '../../actions/props-actions'
-import {ZonesPerLineAmount} from "../../constants/Properties";
+import {RoadWaysAmount, ZonesPerLineAmount} from "../../constants/Properties";
 import GridCalibration from "./GridCalibration";
 
 
@@ -40,7 +40,7 @@ class Calibration extends Component {
                 </Row>
                 <Row>
                     <div className={"col-md-12 col-xs-12 "}>
-                        {/*<GridCalibration calibrationType={RoadWaysAmount} defaultValue={0}/>*/}
+                        <GridCalibration calibrationType={RoadWaysAmount} defaultValue={0}/>
                     </div>
                 </Row>
             </Form>
